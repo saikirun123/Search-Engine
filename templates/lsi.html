@@ -1,0 +1,78 @@
+{%load static%}
+{% load custom_taglist %}
+<html>
+    <head>
+        <title>LSI</title>
+        <script src="script.js"></script>
+        <style>
+        input {
+            outline:none;
+        }
+        .center{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        form{
+            text-align: center;
+        }
+        #id_query{
+            border-radius: 25px;
+            border: 2px solid rgb(134, 74, 125);
+            padding: 20px; 
+            width: 200px;
+            height: 15px;    
+        }
+        #result{
+            font-size : 15px;
+            padding-left: 50px;
+        }
+        #link{
+            color: rgb(10, 101, 36);
+            font-size: 15px;
+            padding-left: 50px;
+            padding-bottom: 0px;
+            line-height: 50%;
+        }
+        #heading{
+            color: rgb(134, 74, 125);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        a{
+            padding-left: 50px;
+            color: rgb(49, 49, 160);
+            font-size: 20px;
+            padding-bottom: 0px;
+            line-height: 50%;
+        }
+        </style>
+    </head>
+    <body>
+        <img src="http://127.0.0.1:8000/static/images/logo.jpg" height="200" class="center" width="200" alt="campus-logo" >
+        <br>
+        
+        <p id="heading">IIT(BHU) - INFORMATION RETRIEVAL</p>
+        <p id="heading">LATENT SEMANTIC INDEXING</p>
+        
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <input style="width:400px; font-size: 15px;" placeholder="Enter your query here..." type="text" name="query" value="{{query}}" maxlength="500" required id="id_query" >
+        </form>
+        <br>
+        <!--{% ifequal request.method 'POST' %}
+        QUERY RESULTS ARE: {{answer}}
+        
+        {% endifequal %}-->
+        
+        {% for value in search_results %}
+            <a href="http://127.0.0.1:8000/static/{% for key,value in file_dictionary.items %}{% ifequal key forloop.parentloop.counter %}{{value}}{% endifequal %}{% endfor %}.txt" target="_blank">Click here to view complete file</a>
+            <p id="link">https://127.0.0.1:8000/static/{% for key,value in file_dictionary.items %}{% ifequal key forloop.parentloop.counter %}{{value}}{% endifequal %}{% endfor %}.txt</p>         
+            <p id="result">{{value}}</p>
+            <br>
+        {% endfor %}
+    </body>
+    
+</html>
